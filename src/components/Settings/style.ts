@@ -30,3 +30,7 @@ export const SetStartPosWrapper = styled.div`
     border: 2px solid rgba(0,0,0,.05);
     padding: 0.6rem 1rem;
 `
+export const SliderWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`

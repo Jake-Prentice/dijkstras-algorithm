@@ -44,14 +44,44 @@ const getInitialGrid = (
 interface IGridProps {
     isChangingStartPos: boolean;
     isChangingEndPos: boolean;
+    pathSpeed: number;
 }
 
 
-const Grid = ({isChangingEndPos, isChangingStartPos}: IGridProps) => {
+const Grid = ({isChangingEndPos, isChangingStartPos, pathSpeed}: IGridProps) => {
     const [grid, setGrid] = useImmer<ICell[][]>([]);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [startPos, setStartPos] = useState<ICellPos>({row: 0, col: 0})
     const [endPos, setEndPos] = useState<ICellPos>({row: 19, col: 19});
+
+    const [shortestPath, setShortestPath] = useState<ICell[]>([]);
+
+    const startDijkstra = () => {
+        const res = dijkstrasAlgorithm({
+            gridRef: grid,
+            startPos,
+            endPos
+        })
+        console.log(res);
+        if (res.shortestPath) setShortestPath(res.shortestPath);
+    }
+
+    useEffect(() => {
+        if (!!shortestPath.length) {
+            setTimeout(() => {
+                const row = shortestPath[0].row;
+                const col = shortestPath[0].col;
+                
+                const cell: HTMLButtonElement = document.querySelector(`.cell-${row}-${col}`)! ;
+                const style ={background: "purple"}
+
+                Object.assign(cell.style, style);
+
+                setShortestPath(prev => prev.slice(1)) 
+            }, pathSpeed)
+        }
+    }, [shortestPath, pathSpeed])
+
 
     useEffect(() => {
         setGrid(getInitialGrid({rows: 20, cols: 20}))
@@ -75,17 +105,7 @@ const Grid = ({isChangingEndPos, isChangingStartPos}: IGridProps) => {
        drawWall(row, col); 
     }
 
-    const startDijkstra = () => {
-        const res = dijkstrasAlgorithm({ gridRef: grid, startPos, endPos })
-        const path = res?.shortestPath!;
-        
-        for (let i=0; i<path.length; i++) {
-            setGrid(draft => {
-                draft[path[i].row][path[i].col].isInShortestPath = true;
-            })
-        }
-    }
-
+   
     return (
         <>
         <GridWrapper

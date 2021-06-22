@@ -3,9 +3,11 @@ import { ICell } from ".";
 import { faBullseye, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+const cellSize = "30px";
+
 export const RowWrapper = styled.div`
     display: flex;
-    height: 30px;
+    height: ${cellSize};
     border-bottom: 2px solid grey;
 
     :first-child {
@@ -15,7 +17,7 @@ export const RowWrapper = styled.div`
 
 
 export const CellWrapper = styled.button<Partial<ICell>>`
-    width: 30px;
+    width: ${cellSize};
     cursor: pointer;
     border: none;
     border-right: 2px solid grey;

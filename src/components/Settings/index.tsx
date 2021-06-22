@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullseye, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import React from 'react'
 import { ICellPos } from '../../utils/dijkstra';
-import { SetStartPosButton, SetStartPosWrapper } from './style';
+import { SetStartPosButton, SetStartPosWrapper, SliderWrapper } from './style';
 import { Margin } from '../shared/spacing';
-
+import Slider, {Range} from "rc-slider";
+import 'rc-slider/assets/index.css'
 
 
 interface ISettingsProps {
@@ -12,14 +13,20 @@ interface ISettingsProps {
     setIsChangingEndPos: React.Dispatch<React.SetStateAction<boolean>>;
     isChangingEndPos: boolean;
     isChangingStartPos: boolean;
+    pathSpeed: number;
+    setPathSpeed: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Settings = ({
+const Settings = ({ 
     setIsChangingStartPos,
     setIsChangingEndPos,
     isChangingEndPos,
-    isChangingStartPos
+    isChangingStartPos,
+    setPathSpeed,
+    pathSpeed
 }: ISettingsProps) => {
+
+   
 
     return (
         <>
@@ -50,6 +57,14 @@ const Settings = ({
                     <FontAwesomeIcon icon={faMapMarkerAlt}/>
                 </SetStartPosButton>
             </SetStartPosWrapper>
+            <Margin left={"2rem"} />
+            <SliderWrapper>
+                <div>
+                    Path Speed (ms)
+                    <Slider onChange={value => setPathSpeed(value)} style={{width: "200px"}} min={0} max={1000}/>
+                </div>
+                {pathSpeed}
+            </SliderWrapper>
         </>
     )
 }

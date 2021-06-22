@@ -9,6 +9,8 @@ function App() {
   const [isChangingStartPos, setIsChangingStartPos] = useState(false);
   const [isChangingEndPos, setIsChangingEndPos] = useState(false);
 
+  const [pathSpeed, setPathSpeed] = useState(200);
+
   return (
     <>
         <GlobalStyle />
@@ -18,12 +20,15 @@ function App() {
                 setIsChangingStartPos={setIsChangingStartPos}
                 isChangingStartPos={isChangingStartPos}
                 isChangingEndPos={isChangingEndPos}
+                setPathSpeed={setPathSpeed}
+                pathSpeed={pathSpeed}
             />
         </TopLayout>
         <MainLayout>
             <Grid 
                isChangingStartPos={isChangingStartPos}
                isChangingEndPos={isChangingEndPos}
+               pathSpeed={pathSpeed}
             />
         </MainLayout>
     </>
