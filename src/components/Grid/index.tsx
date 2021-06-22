@@ -100,6 +100,7 @@ const Grid = ({isChangingEndPos, isChangingStartPos}: IGridProps) => {
 
                         return (
                             <CellWrapper 
+                                className={`cell-${rIndex}-${cIndex}`}
                                 key={cIndex}
                                 onMouseOver={() => isMouseDown && drawWall(rIndex, cIndex)}
                                 onClick={() => OnClickCell(rIndex, cIndex)}
