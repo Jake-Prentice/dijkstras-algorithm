@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {useImmer} from "use-immer"
 import dijkstrasAlgorithm, { getShortestPathFromNode, ICellPos } from '../../utils/dijkstra';
-import {RowWrapper, CellWrapper, StartPosButton, GridWrapper, StartPos, EndPos} from "./style";
+import { Margin } from '../shared/spacing';
+import {RowWrapper, CellWrapper, StartPosButton, GridWrapper, StartPos, EndPos, StartButton} from "./style";
 
 export interface ICell {
     isWall: boolean;
@@ -140,8 +141,9 @@ const Grid = ({isChangingEndPos, isChangingStartPos, pathSpeed}: IGridProps) => 
                 </RowWrapper>
             ))}
         </GridWrapper>
-        <button onClick={startDijkstra}>Start Dijkstra</button>
-       
+        <Margin bottom={"2rem"} />
+        <StartButton onClick={startDijkstra}>Start Dijkstra</StartButton>
+        
         </>
     )
 }

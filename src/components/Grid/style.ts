@@ -66,3 +66,17 @@ export const PositionWrapper = styled.div`
     top: 0; left: 0; bottom: 0; right: 0;
     font-size: 1.3rem;
 `
+
+export const StartButton = styled.button`
+    padding: 1em 1em;
+    border-radius: 7px;
+    border: none;
+    background: #8998ff;
+    color: white;
+    cursor: pointer;
+
+    transition: transform 0.3s ease;
+    :hover {
+        transform: scale(1.05);
+    }
+`
