@@ -46,16 +46,18 @@ interface IGridProps {
     isChangingStartPos: boolean;
     isChangingEndPos: boolean;
     pathSpeed: number;
+    showVisitedNodes: boolean;
 }
 
 
-const Grid = ({isChangingEndPos, isChangingStartPos, pathSpeed}: IGridProps) => {
+const Grid = ({isChangingEndPos, isChangingStartPos, pathSpeed, showVisitedNodes}: IGridProps) => {
     const [grid, setGrid] = useImmer<ICell[][]>([]);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [startPos, setStartPos] = useState<ICellPos>({row: 0, col: 0})
     const [endPos, setEndPos] = useState<ICellPos>({row: 19, col: 19});
 
     const [shortestPath, setShortestPath] = useState<ICell[]>([]);
+    const [visitedNodes, setVisitedNodes] = useState<ICell[]>([]);
 
     const startDijkstra = () => {
         const res = dijkstrasAlgorithm({
@@ -63,25 +65,49 @@ const Grid = ({isChangingEndPos, isChangingStartPos, pathSpeed}: IGridProps) => 
             startPos,
             endPos
         })
-        console.log(res);
-        if (res.shortestPath) setShortestPath(res.shortestPath);
+        
+        if (!res) return;
+
+        if (showVisitedNodes) setVisitedNodes(res.visitedNodes); 
+        setShortestPath(res.shortestPath);
     }
 
+
     useEffect(() => {
-        if (!!shortestPath.length) {
+        if (!!shortestPath.length && visitedNodes.length === 0) {
             setTimeout(() => {
                 const row = shortestPath[0].row;
                 const col = shortestPath[0].col;
                 
                 const cell: HTMLButtonElement = document.querySelector(`.cell-${row}-${col}`)! ;
-                const style ={background: "purple"}
+                const style ={background: "yellow"}
+
 
                 Object.assign(cell.style, style);
 
                 setShortestPath(prev => prev.slice(1)) 
             }, pathSpeed)
         }
-    }, [shortestPath, pathSpeed])
+    }, [shortestPath, pathSpeed, visitedNodes])
+
+
+    useEffect(() => {
+        if (!!visitedNodes.length) {
+
+            setTimeout(() => {
+                const row = visitedNodes[0].row;
+                const col = visitedNodes[0].col;
+                
+                const cell: HTMLButtonElement = document.querySelector(`.cell-${row}-${col}`)! ;
+                const style ={background: "purple"}
+                
+                Object.assign(cell.style, style); 
+
+                setVisitedNodes(prev => prev.slice(1)) 
+            }, 0)
+        }
+    }, [visitedNodes, pathSpeed])
+
 
 
     useEffect(() => {
@@ -90,6 +116,7 @@ const Grid = ({isChangingEndPos, isChangingStartPos, pathSpeed}: IGridProps) => 
 
   
     const drawWall = (row: number, col: number) => {
+        if (!!shortestPath.length) return;
         setGrid(draft => {draft[row][col].isWall = true})
     }
 

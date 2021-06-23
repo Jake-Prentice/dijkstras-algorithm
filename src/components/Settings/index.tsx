@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullseye, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import React from 'react'
 import { ICellPos } from '../../utils/dijkstra';
-import { SetStartPosButton, SetStartPosWrapper, SliderWrapper } from './style';
+import { CheckBoxWrapper, SetStartPosButton, SetStartPosWrapper, SliderWrapper } from './style';
 import { Margin } from '../shared/spacing';
 import Slider, {Range} from "rc-slider";
 import 'rc-slider/assets/index.css'
@@ -14,7 +14,9 @@ interface ISettingsProps {
     isChangingEndPos: boolean;
     isChangingStartPos: boolean;
     pathSpeed: number;
-    setPathSpeed: React.Dispatch<React.SetStateAction<number>>
+    setPathSpeed: React.Dispatch<React.SetStateAction<number>>;
+    setShowVisitedNodes: React.Dispatch<React.SetStateAction<boolean>>;
+    showVisitedNodes: boolean
 }
 
 const Settings = ({ 
@@ -23,7 +25,9 @@ const Settings = ({
     isChangingEndPos,
     isChangingStartPos,
     setPathSpeed,
-    pathSpeed
+    pathSpeed,
+    setShowVisitedNodes,
+    showVisitedNodes
 }: ISettingsProps) => {
 
    
@@ -57,7 +61,7 @@ const Settings = ({
                     <FontAwesomeIcon icon={faMapMarkerAlt}/>
                 </SetStartPosButton>
             </SetStartPosWrapper>
-            <Margin left={"2rem"} />
+            <Margin left={"3rem"} />
             <SliderWrapper>
                 <div>
                     Path Speed (ms)
@@ -65,6 +69,12 @@ const Settings = ({
                 </div>
                 {pathSpeed}
             </SliderWrapper>
+            <Margin right={"3rem"} /> 
+            <CheckBoxWrapper>     
+                Show Visited Nodes
+                <Margin right={"1rem"} />
+                <input onChange={e => setShowVisitedNodes(e.target.checked)} checked={showVisitedNodes} type="checkbox" />
+            </CheckBoxWrapper>
         </>
     )
 }

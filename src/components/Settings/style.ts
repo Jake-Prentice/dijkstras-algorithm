@@ -34,3 +34,8 @@ export const SliderWrapper = styled.div`
     display: flex;
     align-items: center;
 `
+
+export const CheckBoxWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`

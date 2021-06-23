@@ -9,7 +9,8 @@ function App() {
   const [isChangingStartPos, setIsChangingStartPos] = useState(false);
   const [isChangingEndPos, setIsChangingEndPos] = useState(false);
 
-  const [pathSpeed, setPathSpeed] = useState(200);
+  const [pathSpeed, setPathSpeed] = useState(50);
+  const [showVisitedNodes, setShowVisitedNodes] = useState(false);
 
   return (
     <>
@@ -22,6 +23,8 @@ function App() {
                 isChangingEndPos={isChangingEndPos}
                 setPathSpeed={setPathSpeed}
                 pathSpeed={pathSpeed}
+                setShowVisitedNodes={setShowVisitedNodes}
+                showVisitedNodes={showVisitedNodes}
             />
         </TopLayout>
         <MainLayout>
@@ -29,6 +32,7 @@ function App() {
                isChangingStartPos={isChangingStartPos}
                isChangingEndPos={isChangingEndPos}
                pathSpeed={pathSpeed}
+               showVisitedNodes={showVisitedNodes}
             />
         </MainLayout>
     </>
